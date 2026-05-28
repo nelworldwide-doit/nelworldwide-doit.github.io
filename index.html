@@ -1,1 +1,779 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nelson Ejiofor Ndu — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+    /* DARK MODE (default) */
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111111;
+      --border: #222;
+      --text: #ffffff;
+      --muted: #777;
+      --card: #141414;
+      --nav-bg: rgba(10,10,10,0.88);
+    }
+ 
+    /* LIGHT MODE */
+    body.light {
+      --bg: #ffffff;
+      --surface: #f5f5f5;
+      --border: #e0e0e0;
+      --text: #111111;
+      --muted: #777;
+      --card: #f9f9f9;
+      --nav-bg: rgba(255,255,255,0.88);
+    }
+ 
+    html { scroll-behavior: smooth; }
+ 
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      transition: background 0.3s, color 0.3s;
+    }
+ 
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 4rem;
+      background: var(--nav-bg);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.3s;
+    }
+ 
+    .nav-logo {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--text);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+ 
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+ 
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+ 
+    .nav-links a {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+ 
+    .nav-links a:hover { color: var(--text); }
+ 
+    /* DARK/LIGHT TOGGLE BUTTON */
+    .toggle-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.45rem 1rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      cursor: pointer;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      transition: all 0.2s;
+      user-select: none;
+    }
+ 
+    .toggle-btn:hover {
+      box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+      transform: translateY(-1px);
+    }
+ 
+    .toggle-icon { font-size: 0.9rem; }
+ 
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem 4rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+ 
+    .hero-content { max-width: 900px; }
+ 
+    /* "Portfolio — 2026" — BLUE ONLY HERE */
+    .hero-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      color: #4d8ef0;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease 0.2s forwards;
+    }
+ 
+    .hero-name {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -3px;
+      margin-bottom: 0.3rem;
+      color: var(--text);
+      opacity: 0;
+      animation: fadeUp 0.6s ease 0.4s forwards;
+    }
+ 
+    .hero-bio {
+      max-width: 560px;
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--muted);
+      margin-bottom: 3rem;
+      margin-top: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease 0.8s forwards;
+    }
+ 
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.6s ease 1s forwards;
+    }
+ 
+    .btn {
+      display: inline-block;
+      padding: 0.85rem 2rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+ 
+    .btn-primary {
+      background: var(--text);
+      color: var(--bg);
+    }
+ 
+    .btn-primary:hover { opacity: 0.8; transform: translateY(-2px); }
+ 
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+ 
+    .btn-outline:hover {
+      border-color: var(--text);
+    }
+ 
+    /* WEATHER WIDGET */
+    .weather-widget {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 0.8rem 1.2rem;
+      margin-top: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease 1.2s forwards;
+    }
+ 
+    .weather-icon { font-size: 1.5rem; }
+ 
+    .weather-info { font-family: 'DM Mono', monospace; font-size: 0.75rem; }
+    .weather-temp { color: var(--text); font-size: 1rem; font-weight: 500; }
+    .weather-desc { color: var(--muted); font-size: 0.7rem; letter-spacing: 1px; text-transform: uppercase; }
+    .weather-loc  { color: var(--muted); font-size: 0.65rem; }
+ 
+    .weather-input-row {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+ 
+    .weather-input {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      padding: 0.4rem 0.8rem;
+      outline: none;
+      width: 160px;
+      transition: border-color 0.2s;
+    }
+ 
+    .weather-input:focus { border-color: var(--text); }
+ 
+    .weather-search-btn {
+      background: var(--text);
+      color: var(--bg);
+      border: none;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      padding: 0.4rem 0.8rem;
+      cursor: pointer;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: opacity 0.2s;
+    }
+ 
+    .weather-search-btn:hover { opacity: 0.75; }
+ 
+    /* SECTIONS */
+    section {
+      padding: 6rem 4rem;
+      border-top: 1px solid var(--border);
+    }
+ 
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1.5rem;
+      margin-bottom: 4rem;
+    }
+ 
+    .section-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 2px;
+    }
+ 
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -1px;
+      color: var(--text);
+    }
+ 
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+ 
+    /* ABOUT */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+ 
+    .about-text p {
+      color: var(--muted);
+      line-height: 1.9;
+      margin-bottom: 1.5rem;
+      font-size: 1rem;
+    }
+ 
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+ 
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+    }
+ 
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+ 
+    .stat-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+ 
+    /* SKILLS */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 1rem;
+    }
+ 
+    .skill-tag {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 1rem 1.2rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--text);
+      text-align: center;
+      letter-spacing: 1px;
+      transition: all 0.2s;
+    }
+ 
+    .skill-tag:hover {
+      border-color: var(--text);
+      transform: translateY(-2px);
+    }
+ 
+    /* PROJECTS */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+ 
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+ 
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 0;
+      background: var(--text);
+      transition: height 0.3s;
+    }
+ 
+    .project-card:hover { transform: translateY(-4px); border-color: var(--muted); }
+    .project-card:hover::before { height: 100%; }
+ 
+    .project-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+ 
+    .project-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+      line-height: 1.2;
+      color: var(--text);
+    }
+ 
+    .project-desc {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+ 
+    .project-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1.5rem;
+    }
+ 
+    .stack-badge {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      padding: 0.25rem 0.6rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      letter-spacing: 1px;
+    }
+ 
+    .project-link {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: gap 0.2s;
+    }
+ 
+    .project-link:hover { gap: 0.8rem; }
+ 
+    /* CONTACT */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+ 
+    .contact-text {
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 2rem;
+    }
+ 
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+ 
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.2rem 1.5rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.2s;
+    }
+ 
+    .contact-item:hover { border-color: var(--text); }
+ 
+    .contact-icon {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: 1px;
+      min-width: 60px;
+    }
+ 
+    .contact-val { font-size: 0.9rem; }
+ 
+    /* FOOTER */
+    footer {
+      padding: 2rem 4rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+ 
+    footer p {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: 1px;
+    }
+ 
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+ 
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+ 
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+ 
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero { padding: 7rem 1.5rem 3rem; }
+      section { padding: 4rem 1.5rem; }
+      .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+      footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+ 
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">NEN</div>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button class="toggle-btn" id="toggleBtn" onclick="toggleTheme()">
+        <span class="toggle-icon" id="toggleIcon">☀️</span>
+        <span id="toggleLabel">Light</span>
+      </button>
+    </div>
+  </nav>
+ 
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <!-- Blue ONLY on this tag -->
+      <div class="hero-tag">Portfolio — 2026</div>
+      <h1 class="hero-name">Nelson<br/>Ejiofor Ndu</h1>
+      <p class="hero-bio">IT Student focusing on IoT, with hands-on experience in Data Management, Web Development, UI/UX Design, and embedded smart systems. Committed to applying academic and practical knowledge to meaningful, real-world projects.</p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">View Projects →</a>
+        <a href="#contact" class="btn btn-outline">Get in Touch</a>
+      </div>
+ 
+      <!-- WEATHER WIDGET -->
+      <div class="weather-widget">
+        <div class="weather-icon" id="weatherIcon">🌤</div>
+        <div class="weather-info">
+          <div class="weather-temp" id="weatherTemp">—</div>
+          <div class="weather-desc" id="weatherDesc">Loading weather...</div>
+          <div class="weather-loc" id="weatherLoc"></div>
+        </div>
+      </div>
+      <div class="weather-input-row">
+        <input class="weather-input" id="cityInput" type="text" placeholder="Enter city..." />
+        <button class="weather-search-btn" onclick="fetchWeather()">Search</button>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-header reveal">
+      <span class="section-num">01</span>
+      <h2 class="section-title">About</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>I'm Nelson, an Information Technology student with a passion for the intersection of hardware and software. My focus on IoT means I think about systems end-to-end — from embedded sensors to data dashboards.</p>
+        <p>I enjoy building things that work in the real world: apps that solve real problems, systems that handle real data, and interfaces that real people can use.</p>
+        <p>Currently expanding my full-stack capabilities while deepening my expertise in data analytics and smart systems.</p>
+      </div>
+      <div class="about-stats reveal">
+        <div class="stat-card">
+          <div class="stat-num">10+</div>
+          <div class="stat-label">Technologies</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">IoT</div>
+          <div class="stat-label">Specialisation</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">FS</div>
+          <div class="stat-label">Full Stack</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">2026</div>
+          <div class="stat-label">Active Year</div>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-header reveal">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Skills</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="skills-grid reveal">
+      <div class="skill-tag">HTML</div>
+      <div class="skill-tag">CSS</div>
+      <div class="skill-tag">JavaScript</div>
+      <div class="skill-tag">Node.js</div>
+      <div class="skill-tag">Python</div>
+      <div class="skill-tag">Flet</div>
+      <div class="skill-tag">SQL</div>
+      <div class="skill-tag">Power BI</div>
+      <div class="skill-tag">Tableau</div>
+      <div class="skill-tag">Excel</div>
+      <div class="skill-tag">UI/UX Design</div>
+      <div class="skill-tag">IoT Systems</div>
+      <div class="skill-tag">Git & GitHub</div>
+    </div>
+  </section>
+ 
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-header reveal">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Projects</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="projects-grid">
+      <div class="project-card reveal">
+        <div class="project-tag">Full Stack</div>
+        <div class="project-name">Notes App</div>
+        <p class="project-desc">A full-stack notes application with persistent storage. Users can add, view, and delete notes. Built with a complete frontend–backend–database architecture and deployed online.</p>
+        <div class="project-stack">
+          <span class="stack-badge">HTML</span>
+          <span class="stack-badge">JavaScript</span>
+          <span class="stack-badge">Node.js</span>
+          <span class="stack-badge">Express</span>
+          <span class="stack-badge">Supabase</span>
+          <span class="stack-badge">Vercel</span>
+        </div>
+        <a href="https://notes-app-frontend-jade.vercel.app" target="_blank" class="project-link">Live Preview →</a>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-tag">Backend API</div>
+        <div class="project-name">Backend API Lab</div>
+        <p class="project-desc">A Node.js + Express REST API with multiple endpoints. Demonstrates server-side JavaScript, JSON responses, CORS handling, and frontend–backend communication via fetch().</p>
+        <div class="project-stack">
+          <span class="stack-badge">Node.js</span>
+          <span class="stack-badge">Express</span>
+          <span class="stack-badge">JavaScript</span>
+          <span class="stack-badge">REST API</span>
+        </div>
+        <a href="https://github.com/nelworldwide-doit/browser-programming-20026" target="_blank" class="project-link">View Code →</a>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-tag">Frontend</div>
+        <div class="project-name">Clinic Appointment Booking</div>
+        <p class="project-desc">A web application for booking clinic appointments. Patients can view available slots and book appointments through a clean, easy-to-use interface.</p>
+        <div class="project-stack">
+          <span class="stack-badge">HTML</span>
+          <span class="stack-badge">CSS</span>
+          <span class="stack-badge">JavaScript</span>
+          <span class="stack-badge">Vercel</span>
+        </div>
+        <a href="https://clinic-appointment-app-psi.vercel.app/" target="_blank" class="project-link">Live Preview →</a>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-header reveal">
+      <span class="section-num">04</span>
+      <h2 class="section-title">Contact</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="contact-grid">
+      <div class="reveal">
+        <p class="contact-text">I'm open to collaboration, project opportunities, and connecting with fellow developers and engineers. Feel free to reach out.</p>
+        <a href="mailto:nelworldwide@gmail.com" class="btn btn-primary">Send Email →</a>
+      </div>
+      <div class="contact-links reveal">
+        <a href="mailto:nelworldwide@gmail.com" class="contact-item">
+          <span class="contact-icon">EMAIL</span>
+          <span class="contact-val">nelworldwide@gmail.com</span>
+        </a>
+        <a href="https://github.com/nelworldwide-doit" target="_blank" class="contact-item">
+          <span class="contact-icon">GITHUB</span>
+          <span class="contact-val">github.com/nelworldwide-doit</span>
+        </a>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 Nelson Ejiofor Ndu</p>
+    <p>Built with HTML · CSS · JavaScript</p>
+  </footer>
+ 
+  <script>
+    // SCROLL REVEAL
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+ 
+    // DARK / LIGHT TOGGLE
+    function toggleTheme() {
+      const isLight = document.body.classList.toggle('light');
+      document.getElementById('toggleIcon').textContent = isLight ? '🌙' : '☀️';
+      document.getElementById('toggleLabel').textContent = isLight ? 'Dark' : 'Light';
+    }
+ 
+    // WEATHER
+    const weatherIcons = {
+      0: '☀️', 1: '🌤', 2: '⛅', 3: '☁️',
+      45: '🌫', 48: '🌫', 51: '🌦', 53: '🌦', 55: '🌧',
+      61: '🌧', 63: '🌧', 65: '🌧', 71: '❄️', 73: '❄️', 75: '❄️',
+      80: '🌦', 81: '🌧', 82: '⛈', 95: '⛈', 96: '⛈', 99: '⛈'
+    };
+ 
+    const weatherDescs = {
+      0: 'Clear sky', 1: 'Mainly clear', 2: 'Partly cloudy', 3: 'Overcast',
+      45: 'Foggy', 48: 'Foggy', 51: 'Light drizzle', 53: 'Drizzle', 55: 'Heavy drizzle',
+      61: 'Light rain', 63: 'Rain', 65: 'Heavy rain', 71: 'Light snow', 73: 'Snow', 75: 'Heavy snow',
+      80: 'Showers', 81: 'Showers', 82: 'Heavy showers', 95: 'Thunderstorm', 96: 'Thunderstorm', 99: 'Thunderstorm'
+    };
+ 
+    async function fetchWeather(city) {
+      city = city || document.getElementById('cityInput').value.trim() || 'Helsinki';
+      try {
+        const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1`);
+        const geoData = await geoRes.json();
+        if (!geoData.results || geoData.results.length === 0) {
+          document.getElementById('weatherDesc').textContent = 'City not found';
+          return;
+        }
+        const { latitude, longitude, name, country } = geoData.results[0];
+        const wRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`);
+        const wData = await wRes.json();
+        const cw = wData.current_weather;
+        const code = cw.weathercode;
+        document.getElementById('weatherIcon').textContent = weatherIcons[code] || '🌡';
+        document.getElementById('weatherTemp').textContent = `${Math.round(cw.temperature)}°C`;
+        document.getElementById('weatherDesc').textContent = weatherDescs[code] || 'Unknown';
+        document.getElementById('weatherLoc').textContent = `${name}, ${country}`;
+      } catch (e) {
+        document.getElementById('weatherDesc').textContent = 'Could not load weather';
+      }
+    }
+ 
+    document.getElementById('cityInput').addEventListener('keydown', e => {
+      if (e.key === 'Enter') fetchWeather();
+    });
+ 
+    fetchWeather('Helsinki');
+  </script>
+ 
+</body>
+</html>
+ 
